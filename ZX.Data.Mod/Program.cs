@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using ZX.Data.View.App_Start;
 
-namespace ZX.Data.Mod
+namespace ZX.Data.View
 {
     static class Program
     {
@@ -14,9 +15,11 @@ namespace ZX.Data.Mod
         [STAThread]
         static void Main()
         {
+            AutofacConfig.Register();
+
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());
+            Application.Run(new MainView());
         }
     }
 }

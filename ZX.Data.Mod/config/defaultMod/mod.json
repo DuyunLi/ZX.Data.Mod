@@ -1,0 +1,15 @@
+{
+  "name": "测试mod",
+  "desc": "这是一个测试mod",
+  "version": "0.1",
+  "game_version": "0.9",
+  "items": [
+    {
+      "file": "/ZXRules.dat",
+      "tabel": "",
+      "field": "",
+      "original": "",
+      "value": ""
+    }
+  ]
+}
