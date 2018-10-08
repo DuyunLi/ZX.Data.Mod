@@ -3,7 +3,7 @@ namespace ZX.Data.Unity
 {
     public class ModFile
     {
-        public static string FileExt = "mod.json";
+        public static string FileName = "mod.json";
         /// <summary>
         /// mod名称
         /// </summary>

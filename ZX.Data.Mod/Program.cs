@@ -4,6 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using ZX.Data.View.App_Start;
+using Autofac;
+using ZX.Data.View.Common;
 
 namespace ZX.Data.View
 {
@@ -19,7 +21,12 @@ namespace ZX.Data.View
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new MainView());
+            Application.Run(
+                new MainView(
+                    AutofacConfig.container.Resolve<ResourcesHelper>(),
+                    AutofacConfig.container.Resolve<LogHelper>()
+                    )
+                );
         }
     }
 }
