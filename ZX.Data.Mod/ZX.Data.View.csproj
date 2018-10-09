@@ -53,6 +53,7 @@
     <Compile Include="App_Start\AutofacConfig.cs" />
     <Compile Include="Common\FileHelper.cs" />
     <Compile Include="Common\LogHelper.cs" />
+    <Compile Include="Common\PackageHelper.cs" />
     <Compile Include="Common\ResourcesHelper.cs" />
     <Compile Include="MainView.cs">
       <SubType>Form</SubType>
@@ -75,7 +76,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <None Include="config\defaultMod\mod.json" />
+    <None Include="mod\defaultMod\mod.json" />
     <None Include="config\pak.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -103,5 +104,6 @@
       <Name>ZX.Data.Unity</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

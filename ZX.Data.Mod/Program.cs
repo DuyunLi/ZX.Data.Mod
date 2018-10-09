@@ -24,6 +24,7 @@ namespace ZX.Data.View
             Application.Run(
                 new MainView(
                     AutofacConfig.container.Resolve<ResourcesHelper>(),
+                    AutofacConfig.container.Resolve<PackageHelper>(),
                     AutofacConfig.container.Resolve<LogHelper>()
                     )
                 );

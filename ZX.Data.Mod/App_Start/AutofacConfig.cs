@@ -25,6 +25,7 @@ namespace ZX.Data.View.App_Start
             var file = new FileHelper(path,log);
             builder.RegisterInstance(file).SingleInstance();
 
+            builder.RegisterInstance(new PackageHelper(file, log)).SingleInstance();
             builder.RegisterInstance(new ResourcesHelper(file, log)).SingleInstance();
 
             container = builder.Build();

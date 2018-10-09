@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 namespace ZX.Data.Unity
 {
     public class ModFile
@@ -15,37 +16,18 @@ namespace ZX.Data.Unity
         /// <summary>
         /// 游戏版本号
         /// </summary>
-        public Version version { get; set; }
+        public string version { get; set; }
         /// <summary>
         /// 游戏版本号
         /// </summary>
-        public Version game_version { get; set; }
+        public string game_version { get; set; }
         /// <summary>
-        /// 修改内容
+        /// 文件列表
         /// </summary>
-        public static IEquatable<ModItem> items { get; set; }
-    }
-    public class ModItem
-    {
+        public static IEnumerator<string> files { get; set; }
         /// <summary>
-        /// 修改的文件
+        /// 图片列表
         /// </summary>
-        public string file { get; set; }
-        /// <summary>
-        /// 修改的表名
-        /// </summary>
-        public string tabel { get; set; }
-        /// <summary>
-        /// 修改的字段
-        /// </summary>
-        public string field { get; set; }
-        /// <summary>
-        /// 修改前的值
-        /// </summary>
-        public string original { get; set; }
-        /// <summary>
-        /// 修改后的值
-        /// </summary>
-        public string value { get; set; }
+        public static IEnumerator<string> images { get; set; }
     }
 }

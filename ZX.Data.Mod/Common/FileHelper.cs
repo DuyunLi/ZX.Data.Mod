@@ -27,5 +27,17 @@ namespace ZX.Data.View.Common
                 return stream.ReadToEnd();
             }
         }
+        public void Writer(string url,string txt)
+        {
+            logHelper.Debug.Debug("writer file :" + url);
+            if (url.IndexOf(":") != 1)
+            {
+                url = Path.Combine(this.path, url);
+            }
+            using (var stream = new StreamWriter(url))
+            {
+                stream.Write(txt);
+            }
+        }
     }
 }
