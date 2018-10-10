@@ -9,7 +9,7 @@ namespace ZX.Data.Unity
         /// <summary>
         /// mod列表
         /// </summary>
-        public PackageItem[] items { get; set; }
+        public List<PackageItem> items { get; set; }
         /// <summary>
         /// 最后更新时间
         /// </summary>

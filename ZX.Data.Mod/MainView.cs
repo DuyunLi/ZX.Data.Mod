@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using ZX.Data.Unity;
 using ZX.Data.View.Common;
-
+using System.IO;
 namespace ZX.Data.View
 {
     public partial class MainView : Form
@@ -116,11 +116,81 @@ namespace ZX.Data.View
 
         private void openFile()
         {
-
+            OpenFileDialog fileDialog = new OpenFileDialog();
+            fileDialog.Multiselect = false;
+            fileDialog.Title = resourcesHelper.GetSystem("main.dialog.file.title");
+            fileDialog.Filter = resourcesHelper.GetSystem("main.dialog.file.filter");
+            if (fileDialog.ShowDialog() == DialogResult.OK)
+            {
+                if(AddMod(fileDialog.FileName,(s)=> {
+                    MessageBox.Show(string.Format(resourcesHelper.GetSystem("main.msg.open_file_fail"),s));
+                }))
+                {
+                    MessageBox.Show(resourcesHelper.GetSystem("main.msg.open_file_successful"));
+                    RefreshPackage();
+                }
+            }
+        }
+        public bool AddMod(string path,Action<string> errorAction)
+        {
+            if (File.Exists(path) && Path.GetFileName(path).Equals(ModFile.FileName))
+            {
+                if (packageHelper.packageFile == null || packageHelper.packageFile.items == null)
+                {
+                    return false;
+                }
+                try
+                {
+                    packageHelper.InsertMod(path);
+                    return true;
+                }
+                catch (Exception ex)
+                {
+                    logHelper.Error.Error("open mod", ex);
+                    errorAction(path);
+                }
+            }
+            return false;
+        }
+        private Tuple<int,int> addFolder(DirectoryInfo theFolder)
+        {
+            var failCount = 0;
+            var successfulCount = 0;
+            if (theFolder.Exists)
+            {
+                var files = theFolder.GetFiles(ModFile.FileName);
+                foreach (var item in files)
+                {
+                    if (AddMod(item.FullName, s => failCount++))
+                    {
+                        successfulCount++;
+                    }
+                }
+                var dirs = theFolder.GetDirectories();
+                foreach (var item in dirs)
+                {
+                    var ret = addFolder(item);
+                    failCount += ret.Item2;
+                    successfulCount += ret.Item1;
+                }
+            }
+            return new Tuple<int, int>(successfulCount, failCount);
         }
         private void openFolder()
         {
-
+            FolderBrowserDialog dialog = new FolderBrowserDialog();
+            dialog.Description = resourcesHelper.GetSystem("main.dialog.folder.title");
+            DialogResult result = dialog.ShowDialog();
+            if (result == DialogResult.Cancel) { return; }
+            string folderPath = dialog.SelectedPath.Trim();
+            DirectoryInfo theFolder = new DirectoryInfo(folderPath);
+            var failCount = 0;
+            var successfulCount = 0;
+            var ret = addFolder(theFolder);
+            failCount += ret.Item2;
+            successfulCount += ret.Item1;
+            MessageBox.Show(string.Format( resourcesHelper.GetSystem("main.dialog.folder.msg"),successfulCount+failCount,successfulCount,failCount));
+            RefreshPackage();
         }
         private void searchInternet()
         {
@@ -128,6 +198,8 @@ namespace ZX.Data.View
         }
         private void about()
         {
+            var from = new about(resourcesHelper);
+            from.ShowDialog();
 
         }
         private void build()
